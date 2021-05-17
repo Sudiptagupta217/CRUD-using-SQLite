@@ -8,6 +8,8 @@ import android.util.Log;
 import com.sudipta.crudprojectusingsqlite.data.MyDbHandeler;
 import com.sudipta.crudprojectusingsqlite.model.Contact;
 
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -41,6 +43,15 @@ public class MainActivity extends AppCompatActivity {
         //adding a contact to he db
         db.addContact(sudipta);
 
-        Log.d("DBRiju","name are: "+ riju.getName()+","+leri.getName()+","+sudipta.getName());
+        Log.d("DBRiju", "name are: " + riju.getName() + "," + leri.getName() + "," + sudipta.getName());
+
+        //get all contacts
+        List<Contact> allContacts = db.getAllContacts();
+        for (Contact contact : allContacts) {
+            Log.d("DBRiju", "Id " + contact.getId()  +
+                    " Name " + contact.getName() +
+                    " Phone Number " + contact.getPhoneNumber());
+        }
+
     }
 }
