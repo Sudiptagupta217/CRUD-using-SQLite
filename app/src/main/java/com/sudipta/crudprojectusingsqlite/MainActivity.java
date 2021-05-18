@@ -75,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
                     " Name " + contact.getName() +
                     " Phone Number " + contact.getPhoneNumber());
 
-            contacts.add(contact.getName() + "(" + contact.getPhoneNumber() + ")");
+            contacts.add(contact.getName() + " (" + contact.getPhoneNumber() + ")");
         }
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, contacts);
         listView.setAdapter(arrayAdapter);
