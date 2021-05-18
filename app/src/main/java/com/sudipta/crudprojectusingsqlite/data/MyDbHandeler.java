@@ -71,7 +71,8 @@ public class MyDbHandeler extends SQLiteOpenHelper {
         return contactList;
     }
 
-    public int upateContact(Contact contact) {
+    //update data
+    public int upateContact(Contact contact){
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
@@ -81,5 +82,11 @@ public class MyDbHandeler extends SQLiteOpenHelper {
         //Lets update now
        return db.update(Params.TABLE_NAME, values, Params.KEY_ID + "=?",
                 new String[]{String.valueOf(contact.getId())});
+    }
+
+    public void deleteContact(int id){
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(Params.TABLE_NAME,Params.KEY_ID+"=?", new String[]{String.valueOf(id)});
+        db.close();
     }
 }

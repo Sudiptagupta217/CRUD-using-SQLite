@@ -62,5 +62,9 @@ public class MainActivity extends AppCompatActivity {
                     " Name " + contact.getName() +
                     " Phone Number " + contact.getPhoneNumber());
         }
+
+        db.deleteContact(1);
+        db.deleteContact(3);
+        db.deleteContact(11);
     }
 }
