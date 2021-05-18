@@ -84,9 +84,15 @@ public class MyDbHandeler extends SQLiteOpenHelper {
                 new String[]{String.valueOf(contact.getId())});
     }
 
-    public void deleteContact(int id){
+    public void deleteContactById(int id){
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(Params.TABLE_NAME,Params.KEY_ID+"=?", new String[]{String.valueOf(id)});
         db.close();
     }
+    public void deleteContact(Contact contact){
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(Params.TABLE_NAME,Params.KEY_ID+"=?", new String[]{String.valueOf(contact.getId())});
+        db.close();
+    }
+
 }

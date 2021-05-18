@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
         Log.d("DBRiju", "name are: " + riju.getName() + "," + leri.getName() + "," + sudipta.getName());
 
 
-        //update table
+        //update rows
         leri.setId(2);
         leri.setName("Aankik");
         leri.setPhoneNumber("9809876541");
@@ -54,6 +54,11 @@ public class MainActivity extends AppCompatActivity {
 
         Log.d("DBRiju", "No of offected rows are " + affecterRows);
 
+
+        //delete
+        db.deleteContactById(1);
+        db.deleteContactById(3);
+        db.deleteContactById(11);
 
         //get all contacts
         List<Contact> allContacts = db.getAllContacts();
@@ -63,8 +68,5 @@ public class MainActivity extends AppCompatActivity {
                     " Phone Number " + contact.getPhoneNumber());
         }
 
-        db.deleteContact(1);
-        db.deleteContact(3);
-        db.deleteContact(11);
     }
 }
