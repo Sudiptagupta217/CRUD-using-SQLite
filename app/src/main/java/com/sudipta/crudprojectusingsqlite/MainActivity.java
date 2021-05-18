@@ -45,13 +45,22 @@ public class MainActivity extends AppCompatActivity {
 
         Log.d("DBRiju", "name are: " + riju.getName() + "," + leri.getName() + "," + sudipta.getName());
 
+
+        //update table
+        leri.setId(2);
+        leri.setName("Aankik");
+        leri.setPhoneNumber("9809876541");
+        int affecterRows = db.upateContact(leri);
+
+        Log.d("DBRiju", "No of offected rows are " + affecterRows);
+
+
         //get all contacts
         List<Contact> allContacts = db.getAllContacts();
         for (Contact contact : allContacts) {
-            Log.d("DBRiju", "Id " + contact.getId()  +
+            Log.d("DBRiju", "Id " + contact.getId() +
                     " Name " + contact.getName() +
                     " Phone Number " + contact.getPhoneNumber());
         }
-
     }
 }

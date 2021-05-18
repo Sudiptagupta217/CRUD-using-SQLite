@@ -20,6 +20,7 @@ public class MyDbHandeler extends SQLiteOpenHelper {
         super(context, Params.DB_NAME, null, Params.DB_VERSION);
     }
 
+    //create a table
     @Override
     public void onCreate(SQLiteDatabase db) {
         String create = " CREATE TABLE IF NOT EXISTS " + Params.TABLE_NAME + " ( "
@@ -35,6 +36,7 @@ public class MyDbHandeler extends SQLiteOpenHelper {
 
     }
 
+    //insert data
     public void addContact(Contact contact) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -46,6 +48,7 @@ public class MyDbHandeler extends SQLiteOpenHelper {
         db.close();
     }
 
+    //show all data
     public List<Contact> getAllContacts() {
         List<Contact> contactList = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
@@ -66,5 +69,17 @@ public class MyDbHandeler extends SQLiteOpenHelper {
             } while (cursor.moveToNext());
         }
         return contactList;
+    }
+
+    public int upateContact(Contact contact) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(Params.KEY_NAME, contact.getName());
+        values.put(Params.KEY_PHONE, contact.getPhoneNumber());
+
+        //Lets update now
+       return db.update(Params.TABLE_NAME, values, Params.KEY_ID + "=?",
+                new String[]{String.valueOf(contact.getId())});
     }
 }
