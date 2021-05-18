@@ -4,13 +4,18 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
 import com.sudipta.crudprojectusingsqlite.data.MyDbHandeler;
 import com.sudipta.crudprojectusingsqlite.model.Contact;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
+
+    ListView listView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,15 +65,25 @@ public class MainActivity extends AppCompatActivity {
         db.deleteContactById(3);
         db.deleteContactById(11);
 
+        listView = findViewById(R.id.listview);
+        ArrayList<String> contacts = new ArrayList<>();
+
         //get all contacts
         List<Contact> allContacts = db.getAllContacts();
         for (Contact contact : allContacts) {
             Log.d("DBRiju", "Id " + contact.getId() +
                     " Name " + contact.getName() +
                     " Phone Number " + contact.getPhoneNumber());
-        }
 
+            contacts.add(contact.getName() + "(" + contact.getPhoneNumber() + ")");
+        }
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, contacts);
+        listView.setAdapter(arrayAdapter);
+
+
+        //show getcount
         Log.d("DBRiju", "you have " + db.getCount() + " contacts in your database");
 
     }
+
 }
