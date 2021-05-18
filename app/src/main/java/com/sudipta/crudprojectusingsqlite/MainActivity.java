@@ -68,5 +68,7 @@ public class MainActivity extends AppCompatActivity {
                     " Phone Number " + contact.getPhoneNumber());
         }
 
+        Log.d("DBRiju", "you have " + db.getCount() + " contacts in your database");
+
     }
 }
