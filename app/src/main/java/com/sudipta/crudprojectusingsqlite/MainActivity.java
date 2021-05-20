@@ -1,6 +1,8 @@
 package com.sudipta.crudprojectusingsqlite;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -11,6 +13,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.sudipta.crudprojectusingsqlite.adapter.RecyclerViewAdapter;
 import com.sudipta.crudprojectusingsqlite.data.MyDbHandeler;
 import com.sudipta.crudprojectusingsqlite.model.Contact;
 
@@ -19,12 +22,19 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    ListView listView;
+   // ListView listView;
+    private RecyclerView recyclerView;
+    private RecyclerViewAdapter recyclerViewAdapter;
+    private ArrayList<Contact> contactArrayList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        recyclerView = findViewById(R.id.recyclerView);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         MyDbHandeler db = new MyDbHandeler(MainActivity.this);
 
@@ -69,28 +79,33 @@ public class MainActivity extends AppCompatActivity {
         db.deleteContactById(3);
         db.deleteContactById(11);
 
-        listView = findViewById(R.id.listview);
-        ArrayList<String> contacts = new ArrayList<>();
+        //listView = findViewById(R.id.listview);
+       contactArrayList = new ArrayList<>();
 
         //get all contacts
-        List<Contact> allContacts = db.getAllContacts();
-        for (Contact contact : allContacts) {
+        List<Contact> contactList = db.getAllContacts();
+        for (Contact contact : contactList) {
             Log.d("DBRiju", "Id " + contact.getId() +
                     " Name " + contact.getName() +
                     " Phone Number " + contact.getPhoneNumber());
 
-            contacts.add(contact.getName() + " (" + contact.getPhoneNumber() + ")");
+            contactArrayList.add(contact);
         }
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, contacts);
-        listView.setAdapter(arrayAdapter);
 
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String text =  ((TextView)view).getText().toString();
-                Toast.makeText(MainActivity.this, text, Toast.LENGTH_SHORT).show();
-            }
-        });
+        //use your recyclerView
+        recyclerViewAdapter =new RecyclerViewAdapter(MainActivity.this,contactArrayList);
+        recyclerView.setAdapter(recyclerViewAdapter);
+
+//        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, contacts);
+//        listView.setAdapter(arrayAdapter);
+
+//        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                String text =  ((TextView)view).getText().toString();
+//                Toast.makeText(MainActivity.this, text, Toast.LENGTH_SHORT).show();
+//            }
+//        });
 
         //show getcount
         Log.d("DBRiju", "you have " + db.getCount() + " contacts in your database");
